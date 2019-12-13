@@ -7,13 +7,14 @@ const resultsLimit = 25
 exports.searchTunes = async (req, res) => {
   const { term } = req.query
   const encodedTerm = encodeURI(term)
+  const userId = req.headers.authorization
 
   try {
     const results = await axios.get(
       `${itunesAPIUrl}?term=${encodedTerm}&limit=${resultsLimit}`,
     )
 
-    await Searches.generate(term)
+    await Searches.generate(userId, term.toLowerCase())
 
     res.json(results.data.results)
   } catch (error) {

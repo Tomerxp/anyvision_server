@@ -2,12 +2,17 @@ const Searches = require('../models/searches.model')
 
 exports.topSearching = async (req, res) => {
   try {
-    const topResults = await Searches.aggregate([
-      // { $match: { userId } },
-      { $group: { _id: { $toLower: '$searchTerm' }, count: { $sum: 1 } } },
-      { $sort: { count: -1 } },
-      { $limit: 10 },
-    ])
+    const userId = req.headers.authorization
+
+    const topResults = await Searches.find(
+      { userId },
+      ['searchTerm', 'count'],
+      {
+        sort: { count: -1 },
+        skip: 0,
+        limit: 10,
+      },
+    )
 
     res.json(topResults)
   } catch (error) {
