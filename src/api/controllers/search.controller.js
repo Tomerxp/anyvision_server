@@ -31,7 +31,7 @@ exports.searchTuneById = async (req, res) => {
     if (results.data.resultCount <= 0) {
       res.status(404).json({ results: [] })
     } else {
-      res.json(results.data.results)
+      res.json(results.data.results[0])
     }
   } catch (error) {
     res.status(500).send({ error: error.message })
