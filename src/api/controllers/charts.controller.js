@@ -1,6 +1,6 @@
 const Searches = require('../models/searches.model')
 
-exports.topSearches = async (req, res) => {
+exports.topSearching = async (req, res) => {
   try {
     const topResults = await Searches.aggregate([
       // { $match: { userId } },
