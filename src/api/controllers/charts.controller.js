@@ -4,7 +4,7 @@ exports.topSearches = async (req, res) => {
   try {
     const topResults = await Searches.aggregate([
       // { $match: { userId } },
-      { $group: { _id: '$searchTerm', count: { $sum: 1 } } },
+      { $group: { _id: { $toLower: '$searchTerm' }, count: { $sum: 1 } } },
       { $sort: { count: -1 } },
       { $limit: 10 },
     ])

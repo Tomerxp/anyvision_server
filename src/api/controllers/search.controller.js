@@ -13,7 +13,7 @@ exports.searchTunes = async (req, res) => {
       `${itunesAPIUrl}?term=${encodedTerm}&limit=${resultsLimit}`,
     )
 
-    await Searches.generate(term.toLowerCase())
+    await Searches.generate(term)
 
     res.json(results.data.results)
   } catch (error) {
