@@ -10,7 +10,6 @@
   },
   "scripts": {
     "precommit": "yarn lint",
-    "prestart": "yarn docs",
     "start": "cross-env NODE_ENV=production pm2 start ./src/index.js",
     "dev": "nodemon ./src/index.js",
     "lint": "eslint ./src/ --ignore-path .gitignore --ignore-pattern internals/scripts",
@@ -23,9 +22,7 @@
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "postcoverage": "opn coverage/lcov-report/index.html",
     "validate": "yarn lint && yarn test",
-    "postpublish": "git push --tags",
-    "docs": "apidoc -i src -o docs",
-    "postdocs": "opn docs/index.html"
+    "postpublish": "git push --tags"
   },
   "dependencies": {
     "axios": "^0.19.0",
@@ -53,7 +50,6 @@
     "winston": "^3.1.0"
   },
   "devDependencies": {
-    "apidoc": "^0.17.5",
     "babel-eslint": "^10.0.3",
     "chai": "^4.1.0",
     "chai-as-promised": "^7.1.1",
