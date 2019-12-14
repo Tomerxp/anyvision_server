@@ -22,11 +22,18 @@ exports.topSearching = async (req, res) => {
 
 exports.globalTopSearching = async (req, res) => {
   try {
-    const topResults = await Searches.find({}, ['searchTerm', 'count'], {
-      sort: { count: -1 },
-      skip: 0,
-      limit: 10,
-    })
+    const topResults = await Searches.aggregate([
+      { $group: { _id: '$searchTerm', count: { $sum: '$count' } } },
+      { $sort: { count: -1 } },
+      { $limit: 10 },
+      {
+        $project: {
+          _id: 0,
+          searchTerm: '$_id',
+          count: '$count',
+        },
+      },
+    ])
 
     res.json(topResults)
   } catch (error) {
